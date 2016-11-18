@@ -1,100 +1,111 @@
-
 #include <stdio.h>
-#include <string.h>
-#include <math.h>
 #include <time.h>
- 
- struct Tempo{
-        unsigned int hora, minuto, segundo;
-};
-struct Estacionamento{
-       char placa[7];
-       char marca[15];
-       struct Tempo entrada; 
-       struct Tempo saida;
-       struct Tempo estadia;
-       int status;
-};
-int main(){
-	   struct tm *local;
-	   time_t t;
-	   t = time(NULL);
-	   local = localtime(&t);
-	   // Função de Time.h para pegar a hora,min e seg atual do sistema
-	   unsigned int hora2,minutos2,segundos2;
-	   hora2 = local->tm_hour; // Hora
-	   minutos2 = local->tm_min; // Minutos
-	   segundos2 = local->tm_sec; // Segundos
-	   
-	   
-       struct Estacionamento parking[20]; // Inicializo estaciomento com 20 vagas
-       int i=0,temp, num;
-       char pesq[7];
-   		while (num!=3)
-   		{
-			printf ("\n Menu \n 1 - Entrada \n 2 - Saida \n 3 - Sair \n");
- 			printf ("\nDigite a opcao requerida: ");
-        	scanf("%d",&num);
-       		switch (num) {
-	            case 1:
-	        	if(i==20){
-	          	printf("Estacionamento Lotado, espere um carro sair");
-	          	break;
-	        	}
-		        for(temp=0;temp<1;temp++){                                                 
-		        printf("\nDigite a placa : ");
-		        scanf("%s", &parking[i].placa);
-		        printf("\nDigite a Marca - Nome do Veiculo: ");
-		        scanf("%s", &parking[i].marca);
-		        parking[i].entrada.hora = hora2;
-		        parking[i].entrada.minuto = minutos2;
-		        parking[i].entrada.segundo = segundos2;
-		        printf("\nHorario de Entrada:  Hora: %d | Minuto: %d | Segundos: %d\n",parking[i].entrada.hora,parking[i].entrada.minuto,parking[i].entrada.segundo);
-		        parking[i].status=1;
-		        i++;
-	        }
-	             break;  
-	 
-	            case 2:
-	            printf ("\n\nDigite o numero da placa.\n");
-	            scanf("%s",&pesq);
-	            for(i=0;i<=20;i++){
-	             if(strcmp(pesq,parking[i].placa)==0){ // Confere a placa do carro no estaciomento
-	             printf("\nNome: %s", parking[i].placa);
-	             printf("\Veiculo: %s", parking[i].marca);
-	             printf("\nDigite a hora da saida ");
-	             scanf("%d",&parking[i].saida.hora);
-	             printf("\nDigite o minuto de saida");
-	             scanf("%d",&parking[i].saida.minuto);
-	             printf("\nDigite o segundo de saida");
-	             scanf("%d",&parking[i].saida.segundo);
-	             int a = parking[i].estadia.hora = parking[i].saida.hora - parking[i].entrada.hora; // Calculo de conversão de Horas de estadia
-	             int b = parking[i].estadia.minuto = parking[i].saida.minuto - parking[i].entrada.minuto; // Calculo de conversão de Minutos de estadia
-	             int c = parking[i].estadia.segundo = parking[i].saida.segundo - parking[i].entrada.segundo; // Calculo de conversão de Segundos de estadia
-	             printf("\nHora Entrada:  %d:%d:%d", parking[i].entrada.hora, parking[i].entrada.minuto, parking[i].entrada.segundo);
-	             printf("\nHora Saida: %d:%d:%d",parking[i].saida.hora,parking[i].saida.minuto,parking[i].saida.segundo);
-	             printf("\nSeu Tempo de Estadia foi: Hora: %d | Minuto: %d | Segundos: %d\n",a,abs(b),abs(c));
-	             --i; // Retira uma Posição, deixando uma vaga
-	             // Abs é o valor absoluto sem sinal !
-	            
-	             
-	       		break;
-	        	
-             } 
-             if (i==21){
-                  printf("Veiculo nao encontrado");
-             }
-            }                   
-            break;
- 
-              continue;
- 
-            default:
-                printf("\n\nNenhuma opcao foi escolhida.");
-                break;
-                }
-}
- 
-    return 0;
-}
+#include <string.h>
 
+struct Estacionamento
+{
+	char placa[7];
+	char modelo[15];
+	char dono[30];
+	int status;
+};
+
+struct Tempo
+{
+	int hora[2];
+	int minuto[2];
+	int segundo[2];
+};
+
+int main(int argc, char** argv)
+{	   
+	   struct Tempo entrada;
+	   struct Tempo saida;
+	   struct Estacionamento park[20]; // 20 vagas
+       
+       time_t entrada1; time_t saida1;
+       
+       struct tm * ent;
+       struct tm * sai;
+       time(&entrada1);
+       ent = localtime(&entrada1);
+       printf("%s",asctime(ent));
+       
+	   int opcao = 0,vaga = 0,pesqV;
+	   do
+	   {
+		   printf("\nDigite a Sua Opcao");
+		   printf("\n1-Entrada\n2-Saida\n3-Sair do Sistema\n");
+		   scanf("%d",&opcao);
+		   switch(opcao)
+		   {
+		   case 1:
+		   	printf("Digite uma Vaga (0 - 20) Para Estacionar\n");
+		   	scanf("%d",&vaga);
+		   	while(vaga > 20){
+		   		printf("\nDigite um Numero Entre 0 - 20: ");
+	   			scanf("%d",&vaga);
+	   			
+			   }
+            if(park[vaga].status == 1){
+				printf("\nJÃ¡ existe um veiculos posicionado nesta vaga");
+				break;
+			}	
+				fflush(stdin);
+				printf("\nDigite a Sua Placa\t");
+			   	//scanf("%s",&park[vaga].placa);
+			   	gets(park[vaga].placa);
+			   	printf("\nDigite o Modelo do Veiculo\t");
+			   	//scanf("%s",&park[vaga].modelo);
+			   	gets(park[vaga].modelo);
+			   	printf("\nDigite o Primeiro Nome do Dono\t");
+			   	//scanf("%s",&park[vaga].dono);
+			   	gets(park[vaga].dono);
+			   	printf("\nVeiculo Guardado na Vaga: %d\nGuarde consigo este numero !",vaga);
+			   	park[vaga].status = 1;
+			   
+			   break;
+		   case 2:
+		   		printf("\nDigite o numero da Vaga correspondente ao carro que deseja\t");
+		   		scanf("%d",&pesqV);
+		   		while(park[pesqV].status != 1){
+					   printf("NÃ£o ha veiculo registrado nesta vaga !\nDigite Novamente o Numero da Vaga");
+					   scanf("%d",&pesqV);
+                }
+                printf("\nDados Sobre o Veiculo");
+                printf("\nPlaca:\t%s",park[pesqV].placa);
+                printf("\nModelo:\t%s",park[pesqV].modelo);
+                printf("\nDono:\t%s",park[pesqV].dono);
+
+				char vazio[8] = "";		 			 			
+				strcpy(park[pesqV].modelo,vazio);
+				strcpy(park[pesqV].dono,vazio);
+				strcpy(park[pesqV].placa,vazio);
+				park[pesqV].status = 0;
+				
+				int cont = 0;
+				int horaa = 7200;
+				
+				
+                time(&saida1);
+                sai = localtime(&saida1);
+                double a = difftime(saida1,entrada1);
+                
+                int horas = a/3600;
+                int minutos = (a - (3600*horas))/60;
+                int segundos = (a - (3600*horas)-(minutos*60));
+                
+	 	 	    printf("\n\nSegundos:  %.f\n\n",a);
+                printf("\n\nMinutos:  %f\n\n",a/60);
+                printf("\n\nHora: %f\n\n",a/3600);
+                
+                
+                printf("\n\n%d %d %d",horas,minutos,segundos);
+		   		break;
+		   default:
+		   	printf("VocÃª EstÃ¡ Saindo do Sistema");
+			   break;
+		   }
+	   } while(opcao !=3);	
+
+}
