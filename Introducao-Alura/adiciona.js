@@ -1,6 +1,6 @@
-var botao = document.querySelector('#adicionar-paciente');
+let botao1 = document.querySelector('#adicionar-paciente');
 
-botao.addEventListener("click",function(event){
+botao1.addEventListener("click",function(event){
   event.preventDefault(); // Impede comportamento Padrão
 
   var campoNome = document.querySelector('#campo-nome');
