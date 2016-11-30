@@ -5,7 +5,7 @@ botao.addEventListener("click", function() {
 
 	let trsPacientes = document.getElementsByClassName("paciente");
 
-	precorreArray(trsPacientes, function (pacienteTr){
+	precorreArray(trsPacientes, (pacienteTr) => {
 		 
 	    let tdNome = pacienteTr.querySelectorAll(".info-nome")[0]; 
 	    let tdPeso = pacienteTr.querySelectorAll(".info-peso")[0]; 
