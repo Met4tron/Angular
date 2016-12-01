@@ -3,7 +3,7 @@
 let botao = document.querySelector('#calcula-imcs');
 botao.addEventListener("click", () => {
 
-    let trsPacientes = document.getElementsByClassName("paciente");
+    let trsPacientes = document.querySelectorAll("paciente");
 
     precorreArray(trsPacientes, (pacienteTr) => {
 
