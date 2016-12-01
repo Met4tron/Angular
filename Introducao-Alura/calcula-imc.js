@@ -1,37 +1,37 @@
 //calcula-imc.js
 
 let botao = document.querySelector('#calcula-imcs');
-botao.addEventListener("click", function() {
+botao.addEventListener("click", () => {
 
-	let trsPacientes = document.getElementsByClassName("paciente");
+    let trsPacientes = document.getElementsByClassName("paciente");
 
-	precorreArray(trsPacientes, (pacienteTr) => {
-		 
-	    let tdNome = pacienteTr.querySelectorAll(".info-nome")[0]; 
-	    let tdPeso = pacienteTr.querySelectorAll(".info-peso")[0]; 
-		let tdAltura = pacienteTr.querySelectorAll(".info-altura")[0];
+    precorreArray(trsPacientes, (pacienteTr) => {
 
-	    let pacienteAtual = { 
-	        nome : tdNome.textContent, 
-	        peso : tdPeso.textContent, 
-	        altura : tdAltura.textContent,
-	        pegaImc: function() {
+        let tdNome = pacienteTr.querySelectorAll(".info-nome")[0];
+        let tdPeso = pacienteTr.querySelectorAll(".info-peso")[0];
+        let tdAltura = pacienteTr.querySelectorAll(".info-altura")[0];
 
-	            if(this.altura != 0){
-	                let imc = this.peso / (this.altura * this.altura);
-	                return imc;
-	            } else{
+        let pacienteAtual = {
+            nome: tdNome.textContent,
+            peso: tdPeso.textContent,
+            altura: tdAltura.textContent,
+            pegaImc: () => {
 
-	                console("Não posso dividir por zero!");
-	            }
-	        }
-	    };    
+                if (this.altura != 0) {
+                    let imc = this.peso / (this.altura * this.altura);
+                    return imc;
+                } else {
 
-	    let imc = pacienteAtual.pegaImc();
+                    console("Não posso dividir por zero!");
+                }
+            }
+        };
 
-	    let tdImc = pacienteTr.getElementsByClassName("info-imc")[0]; 
-	    tdImc.textContent = imc;
+        let imc = pacienteAtual.pegaImc();
 
-	    console.log(imc);
-	}); 
+        let tdImc = pacienteTr.querySelectorAll("info-imc")[0];
+        tdImc.textContent = imc;
+
+        console.log(imc);
+    });
 });
