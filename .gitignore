@@ -1,2 +1,5 @@
 *.DS_Store
 aluraframe/server/node_modules/body-parser/lib/types/urlencoded.js
+
+*node_modules/
+*node_modules
